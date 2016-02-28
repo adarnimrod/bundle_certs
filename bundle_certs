@@ -1,0 +1,24 @@
+#!/bin/sh -e
+
+
+subject_hash () {
+    openssl x509 -noout -subject_hash -in $1
+}
+
+issuer_hash () {
+    openssl x509 -noout -issuer_hash -in $1
+}
+
+find_root () {
+    for filename in "$@"
+    do
+        if [ "$(subject_hash $filename)" = "$(issuer_hash $filename)" ]
+        then
+            echo "$filename"
+            break
+        fi
+    done
+}
+
+
+root="$(find_root "$@")"
