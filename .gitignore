@@ -1,0 +1,9 @@
+*.swp
+*.swo
+~*
+*~
+certs/
+.testcerts/
+.server.pid
+.idea/
+.DS_Store
