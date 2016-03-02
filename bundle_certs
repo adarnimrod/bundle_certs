@@ -1,18 +1,21 @@
 #!/bin/sh -e
+# Check if the script is being sourced or not.
+[ "$_" != "$0" ] && expr "$-" : ".*i.*" > /dev/null && sourced=1
 
 
-subject_hash () {
-    openssl x509 -noout -subject_hash -in $1
-}
+# Returns the subject hash of the certificate path provided.
+alias subject_hash='openssl x509 -noout -subject_hash -in'
 
-issuer_hash () {
-    openssl x509 -noout -issuer_hash -in $1
-}
+# Returns the issuer hash of the certificate path provided.
+alias issuer_hash='openssl x509 -noout -issuer_hash -in'
 
-find_root () {
+find_root_cert () {
+    # Returns the (first) root (self-signed) certificate found in the list
+    # of file paths provided.
     for filename in "$@"
     do
-        if [ "$(subject_hash $filename)" = "$(issuer_hash $filename)" ]
+        if [ -f "$filename" ] && \
+            [ "$(subject_hash $filename)" = "$(issuer_hash $filename)" ]
         then
             echo "$filename"
             break
@@ -20,5 +23,59 @@ find_root () {
     done
 }
 
+find_issued_by () {
+    # Recieves the issuer hash and a list of file paths, returns the path to
+    # the certificate which was issued by that hash.
+    certhash="$1"
+    shift
+    for filename in "$@"
+    do
+        if [ -f "$filename" ] && \
+            [ "$(issuer_hash $filename)" = "$certhash" ] && \
+            [ "$(issuer_hash $filename)" != "$(subject_hash $filename)" ]
+        then
+            echo "$filename"
+            break
+        fi
+    done
+}
 
-root="$(find_root "$@")"
+unbundle_cert () {
+    # Recieves a file path, creates a directory named certs with all of the
+    # individual certs contained within that file inside the directory (the
+    # filenames are the subject hash for each certificate).
+    mkdir -p certs
+    awk '/-----BEGIN[A-Z0-9 ]*CERTIFICATE-----/ {n++} \
+        n > 0 {print > "certs/cert" (1+n)}' "$1"
+    for certificate in certs/cert*
+    do
+        [ -f "$certificate" ] || continue
+        mv "$certificate" "certs/$(subject_hash $certificate)"
+    done
+}
+
+bundle_certs () {
+    for filename in "$@"
+    do
+        unbundle_cert "$filename"
+    done
+    cd certs
+    issuer="$(find_root_cert *)"
+    if [ -z "$issuer" ]
+    then
+        echo "Failed to find root certificate." > /dev/stderr
+        exit 1
+    fi
+    issued="$(find_issued_by $issuer *)"
+    while [ -n "$issued" ]
+    do
+        ordered_certs="$issued $ordered_certs"
+        issuer="$issued"
+        issued="$(find_issued_by $issuer *)"
+    done
+    cat $ordered_certs
+    cd ..
+    rm -r certs
+}
+
+[ ! "$sourced" ] && bundle_certs "$@"
