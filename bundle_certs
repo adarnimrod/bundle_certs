@@ -57,7 +57,7 @@ unbundle_cert () {
 bundle_certs () {
     for filename in "$@"
     do
-        unbundle_cert "$filename"
+        [ -f "$filename" ] && unbundle_cert "$filename"
     done
     cd certs
     issuer="$(find_root_cert *)"
