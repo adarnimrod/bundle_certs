@@ -63,3 +63,8 @@ Simply run:
 .. code:: shell
 
     make test
+
+TODO
+----
+
+- Detect when no parameters are passed and output a usage message.
