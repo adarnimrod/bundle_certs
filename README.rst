@@ -47,8 +47,9 @@ Shell functions
 - issuer_hash: Returns OpenSSL's hash of the cert's issuer.
 - find_root_cert: Return the filename of the (first) root (self-signed)
   certificate of the filenames passed as parameters.
-- find_cert_by_hash: Gets a hash and a list of filenames, returns the
-  filename of the certificate with that subject hash.
+- find_cert_by_issuer_hash: Gets a hash and a list of filenames, returns the
+  filename of the certificate with that issuer hash. Ignores self-signed (root
+  CA) certificates.
 - unbudle_cert: Gets a filename, creates a directory named :code:`certs` which
   contains all of the individual certs in the file (the files are named by their
   subject hash).
