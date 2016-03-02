@@ -1,7 +1,8 @@
 bundle-certs
 ############
 
-A shell script to bundle SSL certificates in the correct order.
+A shell script to bundle SSL certificates in the correct order. The use case
+envisioned is programmatically handling SSL certificate renewal.
 
 Installation
 ------------
