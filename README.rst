@@ -63,3 +63,17 @@ Simply run:
 .. code:: shell
 
     make test
+
+License
+-------
+
+This software is licnesed under the MIT licese (see the :code:`LICENSE.txt`
+file).
+
+Author Information
+------------------
+
+Nimrod Adar, `contact me <nimrod@shore.co.il>`_ or visit my `website
+<https://www.shore.co.il/>`_. Patches are welcome via `git send-email
+<http://git-scm.com/book/en/v2/Git-Commands-Email>`_. The repository is located
+at: https://www.shore.co.il/cgit/.
