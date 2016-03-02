@@ -78,4 +78,10 @@ bundle_certs () {
     rm -r certs
 }
 
+
+if [ ! "$sourced" ] && [ $# -eq 0 ]
+then
+    echo "Usage: $0 filename [filename2 [filename3 ...]]" > /dev/stderr
+    exit 1
+fi
 [ ! "$sourced" ] && bundle_certs "$@"
