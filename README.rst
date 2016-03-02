@@ -64,6 +64,8 @@ Simply run:
 
     make test
 
+I suggest adding the test as a pre-push Git hook since it is quite fast.
+
 License
 -------
 
