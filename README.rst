@@ -17,11 +17,13 @@ Requirements
 ------------
 
 For regular use:
+
 - A POSIX compatible shell.
 - OpenSSL.
 - AWK.
 
 For testing/ development purposes, all of the above, plus:
+
 - Make.
 - Curl.
 
