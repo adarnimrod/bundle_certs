@@ -23,7 +23,7 @@ find_root_cert () {
     done
 }
 
-find_issued_by () {
+find_cert_by_hash () {
     # Recieves the issuer hash and a list of file paths, returns the path to
     # the certificate which was issued by that hash.
     certhash="$1"
@@ -66,12 +66,12 @@ bundle_certs () {
         echo "Failed to find root certificate." > /dev/stderr
         exit 1
     fi
-    issued="$(find_issued_by $issuer *)"
+    issued="$(find_cert_by_hash $issuer *)"
     while [ -n "$issued" ]
     do
         ordered_certs="$issued $ordered_certs"
         issuer="$issued"
-        issued="$(find_issued_by $issuer *)"
+        issued="$(find_cert_by_hash $issuer *)"
     done
     cat $ordered_certs
     cd ..
