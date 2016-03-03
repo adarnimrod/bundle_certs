@@ -55,17 +55,12 @@ Shell functions
   subject hash).
 - bundle_certs: See Usage section above.
 
+Development
+-----------
 
-Testing
--------
-
-Simply run:
-
-.. code:: shell
-
-    make test
-
-I suggest adding the test as a pre-push Git hook since it is quite fast.
+To ease development :code:`make clean`, :code:`make lint` and :code:`make test`
+are available. It's recommended to add :code:`make lint`  and :code:`make test`
+to to your Git pre-commit and pre-push hooks accourdingly.
 
 License
 -------
