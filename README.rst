@@ -38,7 +38,7 @@ example:
 
     bundle_certs *.crt > bundle.crt
 
-The outputed bundle is WITHOUT the root (CA) certificate.
+The outputted bundle is WITHOUT the root (CA) certificate.
 
 Shell functions
 ---------------
@@ -60,12 +60,12 @@ Development
 
 To ease development :code:`make clean`, :code:`make lint` and :code:`make test`
 are available. It's recommended to add :code:`make lint`  and :code:`make test`
-to to your Git pre-commit and pre-push hooks accourdingly.
+to to your Git pre-commit and pre-push hooks accordingly.
 
 License
 -------
 
-This software is licnesed under the MIT licese (see the :code:`LICENSE.txt`
+This software is licensed under the MIT license (see the :code:`LICENSE.txt`
 file).
 
 Author Information
