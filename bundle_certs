@@ -12,6 +12,7 @@ alias issuer_hash='openssl x509 -noout -issuer_hash -in'
 find_root_cert () {
     # Returns the (first) root (self-signed) certificate found in the list
     # of file paths provided.
+    local filename
     for filename in "$@"
     do
         if [ -f "$filename" ] && \
@@ -27,6 +28,7 @@ find_cert_by_issuer_hash () {
     # Gets a hash and a list of filenames, returns the
     # filename of the certificate with that issuer hash. Ignores self-signed
     # (root CA) certificates.
+    local certhash filename
     certhash="$1"
     shift
     for filename in "$@"
@@ -45,6 +47,7 @@ unbundle_cert () {
     # Recieves a file path, creates a directory named certs with all of the
     # individual certs contained within that file inside the directory (the
     # filenames are the subject hash for each certificate).
+    local certificate
     mkdir -p certs
     awk '/-----BEGIN[A-Z0-9 ]*CERTIFICATE-----/ {n++} \
         n > 0 {print > "certs/cert" (1+n)}' "$1"
@@ -56,6 +59,7 @@ unbundle_cert () {
 }
 
 bundle_certs () {
+    local issuer issued ordered_certs filename
     for filename in "$@"
     do
         [ -f "$filename" ] && unbundle_cert "$filename"
