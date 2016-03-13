@@ -10,4 +10,4 @@
     sha: 604fe77b53d3514d5ad0f66764c7783850bb6e98
     hooks:
     -   id: shell-lint
-        file: bundle-certs
+        files: bundle-certs
