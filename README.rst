@@ -60,7 +60,8 @@ Development
 
 To ease development :code:`make clean`, :code:`make lint` and :code:`make test`
 are available. It's recommended to add :code:`make lint`  and :code:`make test`
-to to your Git pre-commit and pre-push hooks accordingly.
+to to your Git pre-commit and pre-push hooks accordingly. Also, this repo has
+`pre-commit <http://pre-commit.com/>`_ configured.
 
 License
 -------
