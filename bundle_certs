@@ -50,7 +50,7 @@ unbundle_cert () {
     local certificate
     mkdir -p certs
     awk '/-----BEGIN[A-Z0-9 ]*CERTIFICATE-----/ {n++} \
-        n > 0 {print > "certs/cert" (1+n)}' "$1"
+        n > 0 {print > ("certs/cert" (1+n))}' "$1"
     for certificate in certs/cert*
     do
         [ -f "$certificate" ] || continue
