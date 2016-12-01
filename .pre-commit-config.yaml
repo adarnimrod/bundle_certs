@@ -14,5 +14,4 @@
         name: make test
         language: system
         entry: make test
-        files: bundle_certs
-
+        files: bundle_certs|Makefile
