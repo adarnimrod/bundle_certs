@@ -1,11 +1,4 @@
-.PHONY: test clean lint
-
-lint:
-	/bin/sh -en bundle_certs
-
-clean:
-	if [ -f .server.pid ] && [ -d "/proc/$$(cat .server.pid)" ]; then kill "$$(cat .server.pid)"; fi
-	rm -rf .testcerts certs .server.pid
+.PHONY: test
 
 .testcerts:
 	mkdir -p .testcerts
@@ -52,7 +45,7 @@ clean:
 .testcerts/bundle.crt: .testcerts/intermediates.crt .testcerts/server.crt
 	./bundle_certs .testcerts/* > .testcerts/bundle.crt
 
-test: lint .testcerts/bundle.crt .testcerts/root.crt .testcerts/server.key
+test: .testcerts/bundle.crt .testcerts/root.crt .testcerts/server.key
 	openssl s_server -cert .testcerts/bundle.crt -key .testcerts/server.key -quiet -www -no_dhe & echo "$$!" > .server.pid
 	test "$$(curl --fail --cacert .testcerts/root.crt --write-out '%{ssl_verify_result}' --silent --output /dev/null https://localhost:4433)" = "0"
 	if [ -f .server.pid ] && [ -d "/proc/$$(cat .server.pid)" ]; then kill "$$(cat .server.pid)"; fi

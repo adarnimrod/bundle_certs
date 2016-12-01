@@ -1,6 +1,9 @@
 bundle-certs
 ############
 
+.. image:: https://travis-ci.org/adarnimrod/bundle_certs.svg?branch=master
+    :target: https://travis-ci.org/adarnimrod/bundle_certs
+
 A shell script to bundle SSL certificates in the correct order. The use case
 envisioned is programmatically handling SSL certificate renewal.
 
@@ -58,10 +61,9 @@ Shell functions
 Development
 -----------
 
-To ease development :code:`make clean`, :code:`make lint` and :code:`make test`
-are available. It's recommended to add :code:`make lint`  and :code:`make test`
-to to your Git pre-commit and pre-push hooks accordingly. Also, this repo has
-`pre-commit <http://pre-commit.com/>`_ configured.
+For testing run :code:`make test`. For cleaning temporary files run :code:`git
+clean -fdx`. You can use `pre-commit <http://pre-commit.com/>`_ to have the test
+(which is quite quick) run on every commit to ensure quality code.
 
 License
 -------

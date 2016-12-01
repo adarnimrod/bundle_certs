@@ -1,0 +1,27 @@
+---
+language: python
+python: "2.7"
+dist: trusty
+sudo: false
+group: beta
+cache:
+  - pip
+  - directories:
+      - $HOME/.pre-commit
+
+addons:
+  apt:
+    packages:
+      - mawk
+      - openssl
+      - curl
+      - build-essential
+
+install:
+  - pip install pre_commit
+
+script:
+  - pre-commit run --all-files
+
+notifications:
+  email: false

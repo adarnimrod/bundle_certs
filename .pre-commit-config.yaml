@@ -2,12 +2,17 @@
     sha: 97b88d9610bcc03982ddac33caba98bb2b751f5f
     hooks:
     -   id: check-added-large-files
-    -   id: check-json
-    -   id: check-xml
-    -   id: check-yaml
     -   id: check-merge-conflict
 -   repo: https://www.shore.co.il/git/shell-pre-commit/
-    sha: 604fe77b53d3514d5ad0f66764c7783850bb6e98
+    sha: v0.1.0
     hooks:
     -   id: shell-lint
-        files: bundle-certs
+        files: bundle_certs
+-   repo: local
+    hooks:
+    -   id: test
+        name: make test
+        language: system
+        entry: make test
+        files: bundle_certs
+
