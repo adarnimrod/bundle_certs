@@ -1,4 +1,4 @@
-.PHONY: test
+.PHONY: test clean
 
 .testcerts:
 	mkdir -p .testcerts
@@ -51,5 +51,6 @@ test: .testcerts/bundle.crt .testcerts/root.crt .testcerts/server.key
 	if [ -f .server.pid ] && [ -d "/proc/$$(cat .server.pid)" ]; then kill "$$(cat .server.pid)"; fi
 	rm -f .server.pid
 
-
-
+clean:
+	- kill "$$(cat .server.pid)"
+	git clean -fdx
