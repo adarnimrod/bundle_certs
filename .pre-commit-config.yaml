@@ -1,10 +1,10 @@
 -   repo: git://github.com/pre-commit/pre-commit-hooks
-    sha: 97b88d9610bcc03982ddac33caba98bb2b751f5f
+    sha: v0.7.1
     hooks:
     -   id: check-added-large-files
     -   id: check-merge-conflict
 -   repo: https://www.shore.co.il/git/shell-pre-commit/
-    sha: v0.1.0
+    sha: v0.3.0
     hooks:
     -   id: shell-lint
         files: bundle_certs
