@@ -4,14 +4,16 @@
     -   id: check-added-large-files
     -   id: check-merge-conflict
 -   repo: https://www.shore.co.il/git/shell-pre-commit/
-    sha: v0.3.0
+    sha: v0.4.0
     hooks:
     -   id: shell-lint
+        files: bundle_certs
+    -   id: shellcheck
         files: bundle_certs
 -   repo: local
     hooks:
     -   id: test
         name: make test
         language: system
-        entry: make test
+        entry: make test test_source
         files: bundle_certs|Makefile

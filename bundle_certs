@@ -1,7 +1,9 @@
-#!/bin/sh -e
-# Check if the script is being sourced or not.
-[ "$_" != "$0" ] && expr "$-" : ".*i.*" > /dev/null && sourced=1
+#!/bin/sh
+# shellcheck disable=SC2039
 
+# Check if the script is being sourced or not.
+# shellcheck disable=SC2142
+alias is_sourced='[ "$_" != "$0" ] && expr "$-" : ".*i.*" > /dev/null'
 
 # Returns the subject hash of the certificate path provided.
 alias subject_hash='openssl x509 -noout -subject_hash -in'
@@ -16,7 +18,7 @@ find_root_cert () {
     for filename in "$@"
     do
         if [ -f "$filename" ] && \
-            [ "$(subject_hash $filename)" = "$(issuer_hash $filename)" ]
+            [ "$(subject_hash "$filename")" = "$(issuer_hash "$filename")" ]
         then
             echo "$filename"
             break
@@ -34,8 +36,8 @@ find_cert_by_issuer_hash () {
     for filename in "$@"
     do
         if [ -f "$filename" ] && \
-            [ "$(issuer_hash $filename)" = "$certhash" ] && \
-            [ "$(issuer_hash $filename)" != "$(subject_hash $filename)" ]
+            [ "$(issuer_hash "$filename")" = "$certhash" ] && \
+            [ "$(issuer_hash "$filename")" != "$(subject_hash "$filename")" ]
         then
             echo "$filename"
             break
@@ -49,12 +51,12 @@ unbundle_cert () {
     # filenames are the subject hash for each certificate).
     local certificate
     mkdir -p certs
-    awk '/-----BEGIN[A-Z0-9 ]*CERTIFICATE-----/ {n++} \
+    awk '/-----BEGIN[A-Z0-9 ]*CERTIFICATE-----/ {n++}
         n > 0 {print > ("certs/cert" (1+n))}' "$1"
     for certificate in certs/cert*
     do
         [ -f "$certificate" ] || continue
-        mv "$certificate" "certs/$(subject_hash $certificate)"
+        mv "$certificate" "certs/$(subject_hash "$certificate")"
     done
 }
 
@@ -65,28 +67,33 @@ bundle_certs () {
         [ -f "$filename" ] && unbundle_cert "$filename"
     done
     cd certs
-    issuer="$(find_root_cert *)"
+    issuer="$(find_root_cert "*")"
     if [ -z "$issuer" ]
     then
         echo "Failed to find root certificate." > /dev/stderr
         exit 1
     fi
-    issued="$(find_cert_by_issuer_hash $issuer *)"
+    issued="$(find_cert_by_issuer_hash "$issuer" "*")"
     while [ -n "$issued" ]
     do
         ordered_certs="$issued $ordered_certs"
         issuer="$issued"
-        issued="$(find_cert_by_issuer_hash $issuer *)"
+        issued="$(find_cert_by_issuer_hash "$issuer" "*")"
     done
-    cat $ordered_certs
+    cat "$ordered_certs"
     cd ..
     rm -r certs
 }
 
 
-if [ ! "$sourced" ] && [ $# -eq 0 ]
+if ! is_sourced
 then
-    echo "Usage: $0 filename [filename2 [filename3 ...]]" > /dev/stderr
-    exit 1
+    set -eu
+    if [ $# -eq 0 ]
+    then
+        echo "Usage: $0 filename [filename2 [filename3 ...]]" > /dev/stderr
+        exit 1
+    else
+        bundle_certs "$@"
+    fi
 fi
-[ ! "$sourced" ] && bundle_certs "$@"

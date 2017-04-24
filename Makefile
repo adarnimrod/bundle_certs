@@ -54,3 +54,6 @@ test: .testcerts/bundle.crt .testcerts/root.crt .testcerts/server.key
 clean:
 	- kill "$$(cat .server.pid)"
 	git clean -fdx
+
+test_source:
+	/bin/sh -c '. ./bundle_certs'
