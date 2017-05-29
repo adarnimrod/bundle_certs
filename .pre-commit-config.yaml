@@ -4,7 +4,7 @@
     -   id: check-added-large-files
     -   id: check-merge-conflict
 -   repo: https://www.shore.co.il/git/shell-pre-commit/
-    sha: v0.4.0
+    sha: v0.5.4
     hooks:
     -   id: shell-lint
         files: bundle_certs
