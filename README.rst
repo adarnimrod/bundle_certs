@@ -28,8 +28,9 @@ For regular use:
 
 For testing/ development purposes, all of the above, plus:
 
-- Make.
 - Curl.
+- `Bats <https://github.com/sstephenson/bats>`_.
+- `Pre-commit <http://pre-commit.com/>`_.
 
 Usage
 -----
@@ -58,12 +59,12 @@ Shell functions
   subject hash).
 - bundle_certs: See Usage section above.
 
-Development
------------
+Development and testing
+-----------------------
 
-For testing run :code:`make test`. For cleaning temporary files run :code:`git
-clean -fdx`. You can use `pre-commit <http://pre-commit.com/>`_ to have the test
-(which is quite quick) run on every commit to ensure quality code.
+Testing is done using Bats <https://github.com/sstephenson/bats>`_. To test run
+:code:`bats --tap tests/`. `Pre-commit <http://pre-commit.com/>`_ is also
+configured for this repo.
 
 License
 -------

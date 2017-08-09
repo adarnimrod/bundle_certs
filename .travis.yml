@@ -17,7 +17,6 @@ addons:
       - mawk
       - openssl
       - curl
-      - build-essential
       - cabal-install
       - ghc
 
@@ -29,7 +28,8 @@ install:
   - pip install pre_commit | cat
 
 script:
-  - pre-commit run --all-files
+    - pre-commit run --all-files
+    - bats --tap tests/
 
 notifications:
   on_failure: never
