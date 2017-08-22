@@ -11,6 +11,20 @@ alias subject_hash='openssl x509 -noout -subject_hash -in'
 # Returns the issuer hash of the certificate path provided.
 alias issuer_hash='openssl x509 -noout -issuer_hash -in'
 
+__bc_die () {
+    echo "$@" >> /dev/stderr
+    return 1
+}
+
+__bc_usage () {
+    if (is_sourced)
+    then
+        __bc_die "Usage: bundle_certs filename [filename2 [filename3 ...]]"
+    else
+        __bc_die "Usage: $(basename "$0") filename [filename2 [filename3 ...]]"
+    fi
+}
+
 find_root_cert () {
     # Returns the (first) root (self-signed) certificate found in the list
     # of file paths provided.
@@ -64,26 +78,21 @@ bundle_certs () {
     local filename issuer issued bundle
     if [ $# -eq 0 ]
     then
-        echo "Usage: bundle_certs filename [filename2 [filename3 ...]]" >> /dev/stderr
-        return 1
+        __bc_usage
     fi
     for filename in "$@"
     do
         [ -f "$filename" ] && unbundle_cert "$filename"
     done
     issuer="$(find_root_cert certs/*)"
-    if [ -z "$issuer" ]
-    then
-        echo "Failed to find root certificate." >> /dev/stderr
-        return 1
-    fi
+    [ -z "$issuer" ] && __bc_die "Failed to find root certificate."
+    bundle="$(cat "$issuer")"
     issued="$(find_cert_by_issuer_hash "$(basename "$issuer")" certs/*)"
-    bundle="$(cat "$issued")"
     while [ -n "$issued" ]
     do
+        bundle="$(cat "$issued"; echo "${bundle:-}")"
         issuer="$issued"
         issued="$(find_cert_by_issuer_hash "$(basename "$issuer")" certs/*)"
-        [ -n "$issued" ] && bundle="$(echo "${bundle:-}"; cat "$issued")"
     done
     echo "$bundle"
     rm -r certs
@@ -92,11 +101,6 @@ bundle_certs () {
 if ! (is_sourced)
 then
     set -eu
-    if [ $# -eq 0 ]
-    then
-        echo "Usage: $(basename "$0") filename [filename2 [filename3 ...]]" >> /dev/stderr
-        return 1
-    else
-        bundle_certs "$@"
-    fi
+    [ $# -eq 0 ] && __bc_usage
+    bundle_certs "$@"
 fi
