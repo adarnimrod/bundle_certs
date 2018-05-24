@@ -16,7 +16,7 @@ addons:
       - openssl
 
 install:
-  - pip install --progress-bar=off pre_commit
+  - pip install pre_commit | cat
 
 script:
     - pre-commit run --all-files
