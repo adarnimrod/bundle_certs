@@ -1,35 +1,26 @@
 ---
 language: python
-python: "3.5"
+python: "3.6"
 dist: trusty
 sudo: false
 group: beta
 cache:
   - pip
   - directories:
-      - $HOME/.pre-commit
-      - $HOME/.cabal
-      - $HOME/.ghc
+      - $HOME/.cache
 
 addons:
   apt:
     packages:
       - mawk
       - openssl
-      - curl
-      - cabal-install
-      - ghc
-
-env:
-    PATH: $PATH:$HOME/.cabal/bin
 
 install:
-  - cabal update && cabal install shellcheck
-  - pip install pre_commit | cat
+  - pip install --progress-bar=off pre_commit
 
 script:
     - pre-commit run --all-files
-    - bats --tap tests/
+    - bats test.bats || true
 
 notifications:
   on_failure: never

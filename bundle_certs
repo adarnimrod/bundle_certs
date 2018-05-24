@@ -86,7 +86,6 @@ bundle_certs () {
     done
     issuer="$(find_root_cert certs/*)"
     [ -z "$issuer" ] && __bc_die "Failed to find root certificate."
-    bundle="$(cat "$issuer")"
     issued="$(find_cert_by_issuer_hash "$(basename "$issuer")" certs/*)"
     while [ -n "$issued" ]
     do

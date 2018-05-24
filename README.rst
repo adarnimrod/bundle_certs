@@ -28,7 +28,6 @@ For regular use:
 
 For testing/ development purposes, all of the above, plus:
 
-- Curl.
 - `Bats <https://github.com/sstephenson/bats>`_.
 - `Pre-commit <http://pre-commit.com/>`_.
 
@@ -63,7 +62,7 @@ Development and testing
 -----------------------
 
 Testing is done using Bats <https://github.com/sstephenson/bats>`_. To test run
-:code:`bats --tap tests/`. `Pre-commit <http://pre-commit.com/>`_ is also
+:code:`bats test.bats`. `Pre-commit <http://pre-commit.com/>`_ is also
 configured for this repo.
 
 License

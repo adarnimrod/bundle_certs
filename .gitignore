@@ -7,3 +7,4 @@ certs/
 .server.pid
 .idea/
 .DS_Store
+.srl
