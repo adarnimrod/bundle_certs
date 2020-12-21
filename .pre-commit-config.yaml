@@ -1,15 +1,25 @@
+---
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    sha: v1.2.3
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
     hooks:
-    -   id: check-added-large-files
-    -   id: check-yaml
-    -   id: check-merge-conflict
-    -   id: check-symlinks
-    -   id: detect-private-key
-    -   id: trailing-whitespace
--   repo: https://github.com/adarnimrod/shell-pre-commit
-    sha: v0.6.0
+      - id: check-added-large-files
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+
+  - repo: https://github.com/adarnimrod/shell-pre-commit
+    rev: v0.6.0
     hooks:
-    -   id: shell-lint
-    -   id: shellcheck
+      - id: shell-lint
+      - id: shellcheck
+
+  - repo: https://github.com/myint/rstcheck
+    rev: master
+    hooks:
+      - id: rstcheck
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.25.0
+    hooks:
+      - id: yamllint

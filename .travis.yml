@@ -19,8 +19,8 @@ install:
   - pip install pre_commit | cat
 
 script:
-    - pre-commit run --all-files
-    - bats test.bats || true
+  - pre-commit run --all-files
+  - bats test.bats || true
 
 notifications:
   on_failure: never

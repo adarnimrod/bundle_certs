@@ -1,5 +1,3 @@
-#!/usr/bin/env bats
-
 setup () {
     teardown
     mkdir -p .testcerts

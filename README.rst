@@ -1,8 +1,9 @@
 bundle-certs
 ############
 
-.. image:: https://travis-ci.org/adarnimrod/bundle_certs.svg?branch=master
-    :target: https://travis-ci.org/adarnimrod/bundle_certs
+.. image:: https://git.shore.co.il/nimrod/bundle_certs/badges/master/pipeline.svg
+    :target: https://git.shore.co.il/nimrod/bundle_certs/-/commits/master
+    :alt: pipeline status
 
 A shell script to bundle SSL certificates in the correct order. The use case
 envisioned is programmatically handling SSL certificate renewal.
@@ -28,8 +29,8 @@ For regular use:
 
 For testing/ development purposes, all of the above, plus:
 
-- `Bats <https://github.com/sstephenson/bats>`_.
-- `Pre-commit <http://pre-commit.com/>`_.
+- Bats_
+- Pre-commit_
 
 Usage
 -----
@@ -61,9 +62,8 @@ Shell functions
 Development and testing
 -----------------------
 
-Testing is done using Bats <https://github.com/sstephenson/bats>`_. To test run
-:code:`bats test.bats`. `Pre-commit <http://pre-commit.com/>`_ is also
-configured for this repo.
+Testing is done using Bats_. To test run :code:`bats test.bats`. Pre-commit_ is
+also configured for this repo.
 
 License
 -------
@@ -77,4 +77,7 @@ Author Information
 Nimrod Adar, `contact me <nimrod@shore.co.il>`_ or visit my `website
 <https://www.shore.co.il/>`_. Patches are welcome via `git send-email
 <http://git-scm.com/book/en/v2/Git-Commands-Email>`_. The repository is located
-at: https://www.shore.co.il/cgit/.
+at: https://git.shore.co.il/explore/.
+
+.. _Bats: https://github.com/sstephenson/bats
+.. _Pre-commit: https://pre-commit.com/
